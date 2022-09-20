@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "30528003072",
+    "project_id": "makeorder-f00ef",
+    "storage_bucket": "makeorder-f00ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30528003072:android:9f606d54a27e52a1a50ce5",
+        "android_client_info": {
+          "package_name": "com.example.makeorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30528003072-0955b922h8ddv5nm4quictr8dt5htk8a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClwJ5ligruoHwwXBHFr4kiyskN59j-PwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30528003072-0955b922h8ddv5nm4quictr8dt5htk8a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

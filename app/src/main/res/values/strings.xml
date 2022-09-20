@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MakeOrder</string>
+    <string name="app_in_name">Cafe Order</string>
+    <string name="app_name_after">Register App</string>
+    <string name="text_bottom">Log in or Register</string>
+    <string name="LogIn">Log In</string>
+    <string name="SignUp">Register</string>
+    <string name="make_order">Make order</string>
+    <string name="what_add">What to add to the order?</string>
+    <string name="tea">Tea</string>
+    <string name="coffe">Coffe</string>
+    <string name="sugar">Sugar</string>
+    <string name="milk">Milk</string>
+    <string name="lemon">Lemon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
