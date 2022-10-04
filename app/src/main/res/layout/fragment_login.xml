@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootLogin"
 
     tools:context=".LoginFragment"
     ><!--android:id="@+id/fragmentLogin"-->
@@ -25,7 +26,7 @@
             android:text=""
             android:textColor="@color/design_default_color_primary"
             android:textColorHint="@color/design_default_color_primary_variant"
-            android:textSize="28dp"
+            android:textSize="28sp"
             app:met_floatingLabel="highlight"
             app:met_baseColor="#0056d3"
             app:met_primaryColor="#982360"
@@ -40,7 +41,7 @@
             android:text=""
             android:textColor="@color/design_default_color_primary"
             android:textColorHint="@color/design_default_color_primary_variant"
-            android:textSize="28dp"
+            android:textSize="28sp"
             app:met_floatingLabel="highlight"
             app:met_baseColor="#0056d3"
             app:met_primaryColor="#982360"

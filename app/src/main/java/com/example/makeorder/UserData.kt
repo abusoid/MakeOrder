@@ -1,6 +1,7 @@
 package com.example.makeorder
 
-data class UserData(var email: String? = "", var password: String? = "", var drink: String? = "",
+data class UserData(var email: String? = "", var password: String? = "", var phone: String? = "",
+                    var name: String? = "", var drink: String? = "",
                     var sugar: Boolean = false, var milk: Boolean = false,
                     var lemon: Boolean = false, var stage: String? = "login", var drinkType: String? = "") {
     init {
@@ -16,6 +17,10 @@ data class UserData(var email: String? = "", var password: String? = "", var dri
         println("milk: $milk")
         this.lemon = lemon
         println("lemon: $lemon")
+        this.name = name
+        println("name: $name")
+        this.phone = phone
+        println("phone: $phone")
     }
 
 }

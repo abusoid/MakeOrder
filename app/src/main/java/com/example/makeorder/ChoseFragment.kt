@@ -52,14 +52,14 @@ class ChoseFragment : Fragment() {
         }
         println("email $email")
         println("password $password")
-        helloTextView = view.findViewById(R.id.helloText)
+        helloTextView = binding.helloText
         helloTextView.text = "Hello, $email!"
-        orderButton = view.findViewById(R.id.buttonOrder)
-        drinkRadioGroup = view.findViewById(R.id.radioDrink)
-        sugarCheckBox = view.findViewById(R.id.checkBoxSugar)
-        milkCheckBox = view.findViewById(R.id.checkBoxMilk)
-        lemonCheckBox = view.findViewById(R.id.checkBoxLemon)
-        spinner = view.findViewById(R.id.spinner)
+        orderButton = binding.buttonOrder
+        drinkRadioGroup = binding.radioDrink
+        sugarCheckBox = binding.checkBoxSugar
+        milkCheckBox = binding.checkBoxMilk
+        lemonCheckBox = binding.checkBoxLemon
+        spinner = binding.spinner
 
 
         drinkRadioGroup.setOnCheckedChangeListener { group, checkedId ->

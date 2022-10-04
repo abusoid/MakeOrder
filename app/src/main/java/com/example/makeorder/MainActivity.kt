@@ -1,12 +1,24 @@
 package com.example.makeorder
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.LayoutInflater
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.makeorder.databinding.ActivityMainBinding
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.rengwuxian.materialedittext.MaterialEditText
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -15,9 +27,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fragmentLogin: LoginFragment
     private lateinit var choseFragment: ChoseFragment
     private val dataModel: DataModel by viewModels()
-    //private lateinit var auth: FirebaseAuth
-    //private lateinit var db: FirebaseDatabase
-    //private lateinit var users: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseDatabase
+    private lateinit var users: DatabaseReference
+    private lateinit var root: ConstraintLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,9 +44,10 @@ class MainActivity : AppCompatActivity() {
         var sugar: Boolean = false
         var milk: Boolean = false
         var lemon: Boolean = false
-        //auth = FirebaseAuth.getInstance()
-       // db = FirebaseDatabase.getInstance()
-        //users = db.getReference("Users")
+        var root: ConstraintLayout = findViewById(R.id.root_element)
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseDatabase.getInstance()
+        users = db.getReference("Users")
         //val transaction = supportFragmentManager.beginTransaction()
         val loginFragment = LoginFragment.newInstance()
         val choseFragment = ChoseFragment.newInstance()
@@ -76,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         //Зарегистрироваться
         buttonSignUp.setOnClickListener() {
             println("Start Registration")
+            showRegisterWindow()
         }
         //Войти
         buttonLogIn.setOnClickListener {
@@ -101,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     private fun showRegisterWindow() {
         println("Start showRegisterWindow")
 
-            /* var dialog = AlertDialog.Builder(this)
+        var dialog = AlertDialog.Builder(this)
         println(dialog)
         dialog.setTitle("Registration")
         dialog.setMessage("Input register data")
@@ -118,23 +133,63 @@ class MainActivity : AppCompatActivity() {
         var phone = registerWindow.findViewById<MaterialEditText>(R.id.phoneField)
 
         dialog.setNegativeButton("Cancel", DismissClickListener)
-        val OkCliclListener = DialogInterface()
-        dialog.setPositiveButton(
-            "Ok",
-            new DialogInterface.OnClickListener() {
-                fun onClick(dialogInterface: DialogInterface, which: Int) {
-                    if (TextUtils.isEmpty(email.text.toString()))
+        dialog.setPositiveButton("Add", object: DialogInterface.OnClickListener {
+            @Override
+            override fun onClick(dialogInterface: DialogInterface, which: Int) {
+                //Проверки полей
+                println("Before check field")
+                if(TextUtils.isEmpty(email.text.toString())){
+                    Snackbar.make(root, "Enter your email", Snackbar.LENGTH_SHORT).show()
+                    return
                 }
+                if(TextUtils.isEmpty(name.text.toString())){
+                    Snackbar.make(root, "Enter your name", Snackbar.LENGTH_SHORT).show()
+                    return
+                }
+                if(TextUtils.isEmpty(phone.text.toString())){
+                    Snackbar.make(root, "Enter your phone", Snackbar.LENGTH_SHORT).show()
+                    return
+                }
+                if(pass.text.toString().length < 5){
+                    Snackbar.make(root, "Enter your password, more 5 symbols", Snackbar.LENGTH_SHORT).show()
+                    return
+                }
+                println("Before registration")
+                //Регистрация пользователя
+                auth.createUserWithEmailAndPassword(email.text.toString(), pass.text.toString())
+                    .addOnSuccessListener(object: OnSuccessListener<AuthResult> {
+                        override fun onSuccess(p0: AuthResult?) {
+                            var newUserData = UserData()
+                            newUserData.email = email.text.toString()
+                            println("email: ${newUserData.email}")
+                            newUserData.password = pass.text.toString()
+                            println("password: ${newUserData.password}")
+                            newUserData.phone = phone.text.toString()
+                            println("phone: ${newUserData.phone}")
+                            newUserData.name = name.text.toString()
+                            println("name: ${newUserData.name}")
+                            users.child(FirebaseAuth.getInstance().currentUser!!.uid)
+                                .setValue(newUserData)
+                                .addOnSuccessListener { (object: OnSuccessListener<AuthResult> {
+                                    override fun onSuccess(p0: AuthResult?) {
+                                        println("User added")
+                                        Snackbar.make(root, "User added", Snackbar.LENGTH_SHORT).show()
+                                    }
+                                }) }
+                        }
+                    })
+
             }
-        )*/
+        })
+        dialog.show()
     }
-    /*
+
     object DismissClickListener : DialogInterface.OnClickListener {
         override fun onClick(dialogInterface: DialogInterface, which: Int) {
             dialogInterface.dismiss()
         }
     }
-    */
+
 
 
 }
