@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/kofe_kniga_podokonnik_130911_225x300"
-    tools:context=".MainActivity"
+    tools:context=".Views.StartView"
     android:id="@+id/root_element">
 
 

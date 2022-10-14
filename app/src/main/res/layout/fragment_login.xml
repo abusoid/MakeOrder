@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/rootLogin"
 
-    tools:context=".LoginFragment"
+    tools:context=".LoginView"
     ><!--android:id="@+id/fragmentLogin"-->
 
     <LinearLayout
