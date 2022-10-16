@@ -1,6 +1,7 @@
 package com.example.makeorder.Models
 
 import com.example.makeorder.*
+import com.example.makeorder.Data.UserData
 import com.example.makeorder.Repositories.StartRepository
 
 class StartModel(private val repository: StartRepository) : StartMVP.UserModel {

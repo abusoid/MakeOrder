@@ -1,4 +1,4 @@
-package com.example.makeorder
+package com.example.makeorder.Views
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
+import com.example.makeorder.Models.DataModel
+import com.example.makeorder.R
 import com.example.makeorder.databinding.FragmentOrderInfoBinding
 
 
@@ -31,14 +32,15 @@ class OrderInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         textInfo = view.findViewById(R.id.infoText)
 
-        dataModel.userData.observe(activity as LifecycleOwner) {
-            if(it.sugar) sugar = "Sugar"
-            if(it.milk) milk = "Milk"
-            if(it.lemon) lemon = "Lemon"
-            text = "Client: ${it.email} \n Password: ${it.password} \n \n Order: ${it.drink} \n " +
-                    "${it.drinkType} \n \n Add: \n $sugar \n $milk \n $lemon \n" +
+        //dataModel.userData.observe(activity as LifecycleOwner) {
+            if(arguments?.getBoolean("sugar")!!) sugar = "Sugar"
+            if(arguments?.getBoolean("milk")!!) milk = "Milk"
+            if(arguments?.getBoolean("lemon")!!) lemon = "Lemon"
+            text = "Client: ${arguments?.getString("email")!!} \n Password: " +
+                    "${arguments?.getString("password")!!} \n \n Order: ${arguments?.getString("drink")!!} \n " +
+                    "${arguments?.getString("drinkType")!!} \n \n Add: \n $sugar \n $milk \n $lemon \n" +
                     "Thank you, for your order! \n Please, drink more and don't stop!"
-        }
+        //}
         textInfo.text = text
     }
     companion object {

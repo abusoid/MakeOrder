@@ -1,23 +1,17 @@
 package com.example.makeorder.Presenters
 
-import android.app.Activity
-import android.view.View
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.replace
 import com.example.makeorder.*
+import com.example.makeorder.Data.UserData
 
 class LoginPresenter(private val model: StartMVP.UserModel):StartMVP.Presenter {
     private lateinit var view: StartMVP.LoginView
     private lateinit var support: FragmentManager
-    private lateinit var user:UserData
     private lateinit var fragment:Fragment
     private lateinit var nextFragment:Fragment
     private var idHolder:Int = 0
-    private var order:OrderData? = null
-
-
-
 
     override fun setSupportFragmentManager(support: FragmentManager) {
         this.support = support
@@ -31,25 +25,33 @@ class LoginPresenter(private val model: StartMVP.UserModel):StartMVP.Presenter {
         this.view = view
     }
 
+    override fun setView(view: StartMVP.ChoseView) {
+        TODO("Not yet implemented")
+    }
+
     override fun setFragment(fragment:Fragment, idHolder: Int) {
         this.fragment = fragment
         this.idHolder = idHolder
         println("setFragment fragment: $fragment")
         println("setFragment idHolder: $idHolder")
     }
-    override fun setNextFragment(fragment:Fragment, idHolder: Int) {
+    override fun setNextFragment(fragment:Fragment) {
         this.nextFragment=fragment
-        this.idHolder=idHolder
         println("setNextFragment nextFragment: $fragment")
-        println("setNextFragment idHolder: $idHolder")
     }
-    override fun loginButtonClicked() {
+    override fun positiveButtonClicked() {
         println("LoginPresenter loginButtonClicked")
         println(view)
+
         if (view != null) {
             model.saveUser(view!!.getEmail(),view!!.getPassword())
-            println("Start Presenter")
-            changeFragment(fragment, nextFragment, idHolder)
+
+            var bundle = Bundle()
+            bundle.putString("email", view!!.getEmail())
+            bundle.putSerializable("password", view!!.getPassword())
+            nextFragment.arguments = bundle
+                println("Start Presenter")
+            changeFragment(fragment, nextFragment)
         }
     }
     override fun registrationButtonClicked() {
@@ -62,17 +64,20 @@ class LoginPresenter(private val model: StartMVP.UserModel):StartMVP.Presenter {
         return model.getUser()
     }
 
-    override fun changeFragment(fragmentHide:Fragment, fragmentShow:Fragment, idHolder:Int){
+    override fun changeFragment(fragmentHide:Fragment, fragmentShow:Fragment){
         hideFragment(fragmentHide)
-        openFragment(fragmentShow, idHolder)
+        //openFragment(fragmentShow, R.id.fragmentLogin)
+        fragment.parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentLogin, nextFragment)
+            .commit()
     }
     override fun openFragment(f:Fragment, idHolder:Int){
-        support.beginTransaction()
+        f.parentFragmentManager.beginTransaction()
             .replace(idHolder, f)
             .commit()
     }
     override fun hideFragment(f:Fragment){
-        support.beginTransaction()
+        f.parentFragmentManager.beginTransaction()
             .hide(f)
             .commit()
     }

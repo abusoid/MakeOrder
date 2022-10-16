@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.makeorder.*
+import com.example.makeorder.Models.DataModel
 import com.example.makeorder.Models.StartModel
 import com.example.makeorder.Presenters.StartPresenter
 import com.example.makeorder.Repositories.UserRepository
@@ -26,23 +27,21 @@ class StartView : AppCompatActivity(), StartMVP.StartView {
         setContentView(binding.root)
         println(binding)
         presenter = StartPresenter(StartModel(UserRepository()))
-        //this.setPresenter(presenter)
         presenter.setView(this)
         var support = supportFragmentManager
         presenter.setSupportFragmentManager(support)
         var fragmentLogin: LoginView = LoginView.newInstance()
         presenter.setFragment(fragmentLogin, binding.fragmentLogin.id)
 
-
-        //presenter.setNextFragment(choseFragment, binding.fragmentChose.id)
         //Зарегистрироваться
         binding.buttonSignUp.setOnClickListener() {
             println("Start Registration")
+            presenter!!.registrationButtonClicked()
         }
         //Войти
         binding.buttonLogIn.setOnClickListener {
             println("Start LogIn")
-            presenter!!.loginButtonClicked()
+            presenter!!.positiveButtonClicked()
         }
     }
 

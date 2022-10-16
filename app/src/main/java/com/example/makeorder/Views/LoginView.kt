@@ -1,6 +1,5 @@
-package com.example.makeorder
+package com.example.makeorder.Views
 
-import android.R
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -10,10 +9,11 @@ import android.widget.Button
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewModelScope
+import com.example.makeorder.Models.DataModel
 import com.example.makeorder.Models.StartModel
 import com.example.makeorder.Presenters.LoginPresenter
 import com.example.makeorder.Repositories.UserRepository
+import com.example.makeorder.StartMVP
 import com.example.makeorder.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -41,11 +41,13 @@ class LoginView : Fragment(), StartMVP.LoginView {
 
 
     override fun getEmail(): String {
-        return binding.emailField.toString()
+        println("getEmail LoginView " + binding.emailField.toString())
+        return binding.emailField.text.toString()
     }
 
     override fun getPassword(): String {
-        return binding.passwordField.toString()
+        println("getPassword LoginView " + binding.passwordField.toString())
+        return binding.passwordField.text.toString()
     }
 
 
@@ -67,13 +69,15 @@ class LoginView : Fragment(), StartMVP.LoginView {
 
                 presenter!!.setSupportFragmentManager(support)
                 presenter!!.setFragment(this, this.id)
-                presenter!!.setNextFragment(fragmentChose, activity!!.findViewById(R.id.c))
+                presenter!!.setNextFragment(fragmentChose)
                 presenter!!.setView(this)
-                presenter!!.loginButtonClicked()
+                presenter!!.positiveButtonClicked()
             }
         }
         binding.buttonCancel.setOnClickListener {
-
+            parentFragmentManager.beginTransaction()
+                .hide(this)
+                .commit()
         }
 
     }

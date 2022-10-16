@@ -1,26 +1,30 @@
 package com.example.makeorder.Presenters
 
-import android.view.View
+import android.content.DialogInterface
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.replace
 import com.example.makeorder.*
-import com.example.makeorder.Views.StartView
+import com.example.makeorder.Data.OrderData
+import com.example.makeorder.Data.UserData
 
 class StartPresenter(private val model: StartMVP.UserModel):StartMVP.Presenter {
     private var view: StartMVP.StartView? = null
     private lateinit var support: FragmentManager
-    private lateinit var user:UserData
+    private lateinit var user: UserData
     private lateinit var fragment:Fragment
-    private lateinit var nextFragment:Fragment
+    private var nextFragment: Fragment? = null
     private var idHolder:Int = 0
-    private var order:OrderData? = null
+    private var order: OrderData? = null
 
     override fun setView(view: StartMVP.StartView){
         this.view = view
     }
 
     override fun setView(view: StartMVP.LoginView) {
+        TODO("Not yet implemented")
+    }
+
+    override fun setView(view: StartMVP.ChoseView) {
         TODO("Not yet implemented")
     }
 
@@ -34,11 +38,11 @@ class StartPresenter(private val model: StartMVP.UserModel):StartMVP.Presenter {
         this.fragment = fragment
         this.idHolder = idHolder
     }
-    override fun setNextFragment(fragment:Fragment, idHolder: Int) {
+    override fun setNextFragment(fragment:Fragment) {
         this.nextFragment=fragment
-        this.idHolder=idHolder
+       // this.idHolder=idHolder
     }
-    override fun loginButtonClicked() {
+    override fun positiveButtonClicked() {
         if (view != null) {
             //model.saveUser(view!!.getLogin(),view!!.getPassword(), view!!.getPhone(), view!!.getName())
             //changeFragment(fragment, nextFragment, idHolder)
@@ -47,8 +51,11 @@ class StartPresenter(private val model: StartMVP.UserModel):StartMVP.Presenter {
         }
     }
     override fun registrationButtonClicked() {
-        if (view != null) {
-            //model.saveUser(view!!.getLogin(),view!!.getPassword(), view!!.getPhone(), view!!.getName())
+
+    }
+    object DismissClickListener : DialogInterface.OnClickListener {
+        override fun onClick(dialogInterface: DialogInterface, which: Int) {
+            dialogInterface.dismiss()
         }
     }
 
@@ -56,9 +63,10 @@ class StartPresenter(private val model: StartMVP.UserModel):StartMVP.Presenter {
         return model.getUser()
     }
 
-    override fun changeFragment(fragmentHide:Fragment, fragmentShow:Fragment, idHolder:Int){
+    override fun changeFragment(fragmentHide:Fragment, fragmentShow:Fragment){
         hideFragment(fragmentHide)
         openFragment(fragmentShow, idHolder)
+
     }
     override fun openFragment(f:Fragment, idHolder:Int){
         support.beginTransaction()
